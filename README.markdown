@@ -191,13 +191,13 @@ class MyViewController: UIViewController {
   // class stuff here
 }
 
-// MARK: - UITableViewDataSource
 extension MyViewController: UITableViewDataSource {
+  // MARK: UITableViewDataSource
   // table view data source methods
 }
 
-// MARK: - UIScrollViewDelegate
 extension MyViewController: UIScrollViewDelegate {
+  // MARK: UIScrollViewDelegate
   // scroll view delegate methods
 }
 ```
@@ -462,9 +462,7 @@ UIView.animate(withDuration: 1.0, animations: {
 For single-expression closures where the context is clear, use implicit returns:
 
 ```swift
-attendeeList.sort { a, b in
-  a > b
-}
+attendeeList.sort { $0 > $1 }
 ```
 
 Chained methods using trailing closures should be clear and easy to read in context. Decisions on spacing, line breaks, and when to use named versus anonymous arguments is left to the discretion of the author. Examples:
@@ -687,9 +685,7 @@ Extend object lifetime using the `[weak self]` and ```guard let `self` = self el
 **Preferred**
 ```swift
 resource.request().onComplete { [weak self] response in
-  guard let `self` = self else {
-    return
-  }
+  guard let `self` = self else { return }
   let model = self.updateModel(response)
   self.updateUI(model)
 }
@@ -787,12 +783,8 @@ When coding with conditionals, the left-hand margin of the code should be the "g
 ```swift
 func computeFFT(context: Context?, inputData: InputData?) throws -> Frequencies {
 
-  guard let context = context else {
-    throw FFTError.noContext
-  }
-  guard let inputData = inputData else {
-    throw FFTError.noInputData
-  }
+  guard let context = context else { throw FFTError.noContext }
+  guard let inputData = inputData else { throw FFTError.noInputData }
 
   // use context and input to compute the frequencies
   return frequencies
@@ -823,8 +815,8 @@ When multiple optionals are unwrapped either with `guard` or `if let`, minimize 
 ```swift
 guard let number1 = number1,
       let number2 = number2,
-      let number3 = number3 else {
-  fatalError("impossible")
+      let number3 = number3 else { 
+        fatalError("impossible") 
 }
 // do something with numbers
 ```
